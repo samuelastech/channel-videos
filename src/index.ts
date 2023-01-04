@@ -8,14 +8,8 @@ async function bootstrap() {
         type: 'object',
         required: ['PORT', 'KEY'],
         properties: {
-            PORT: {
-                type: 'string',
-                default: 3000
-            },
-
-            KEY: {
-                type: 'string'
-            }
+            PORT: { type: 'number', },
+            KEY: { type: 'string' }
         }
     }
 
@@ -28,8 +22,8 @@ async function bootstrap() {
     fastify.register(env, options)
     await fastify.after()
 
-
-    await fastify.listen({ port: process.env.PORT, host: '0.0.0.0' })
+    const port = typeof process.env.PORT === 'number' ? process.env.PORT : 3000
+    await fastify.listen({ port, host: '0.0.0.0' })
 }
 
 bootstrap()
